@@ -1,5 +1,5 @@
 #!/bin/zsh
-# install-wallpaper-fix.sh
+# install-classic-mac-screensaver-fix.sh
 # Installs a LaunchAgent that periodically restarts WallpaperMacintoshExtension
 # to work around the Classic Mac screensaver bug in macOS Sequoia/Tahoe
 
