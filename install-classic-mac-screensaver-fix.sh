@@ -7,12 +7,12 @@
 PLIST_LABEL="com.local.fix-wallpaper-extension"
 LAUNCH_AGENTS_DIR="$HOME/Library/LaunchAgents"
 PLIST_PATH="${LAUNCH_AGENTS_DIR}/${PLIST_LABEL}.plist"
-INTERVAL=3600  # seconds
+INTERVAL=900  # seconds
 DOMAIN="gui/$(id -u)"
 
 # Skip the restart while the screensaver is on screen so it isn't interrupted,
 # and always exit 0 so launchd doesn't log a failure when the extension isn't running.
-FIX_COMMAND="/usr/bin/pgrep -xq ScreenSaverEngine || /usr/bin/killall WallpaperMacintoshExtension 2>/dev/null; exit 0"
+FIX_COMMAND='idle=$(/usr/sbin/ioreg -c IOHIDSystem | /usr/bin/awk "/HIDIdleTime/ {print int(\$NF/1000000000); exit}"); if [ "${idle:-999}" -lt 30 ]; then /usr/bin/killall WallpaperMacintoshExtension 2>/dev/null; fi; exit 0'
 
 # --- Make sure the LaunchAgents folder exists (it may not on a fresh account) ---
 if ! mkdir -p "$LAUNCH_AGENTS_DIR"; then
